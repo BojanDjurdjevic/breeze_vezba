@@ -79,7 +79,9 @@
                                         <form action="{{ route('admin.remove', $c) }}" method="POST">
                                             @csrf
                                             @method('DELETE')
-                                            <button class="bg-red-600 hover:bg-red-800 text-white rounded-lg px-3 py-1">
+                                            <button class="bg-red-600 hover:bg-red-800 text-white rounded-lg px-3 py-1"
+                                                onclick="return confirm('Da li ste sigurni da želite da obrišete?')"
+                                            >
                                                 Obriši
                                             </button>
                                         </form>
