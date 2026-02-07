@@ -1,11 +1,19 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
+use App\Http\Middleware\CheckAdmin;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::middleware(['auth', CheckAdmin::class])->prefix('admin')->group(function () {
+    
+});
+
+
+
 
 Route::get('/dashboard', function () {
     return view('dashboard');

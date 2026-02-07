@@ -27,6 +27,11 @@
                 </header>
             @endisset
 
+            <div class="max-w-7xl mx-auto px-4 mt-4">
+                @include('components.session-messages')
+            </div>
+
+
             <!-- Page Content -->
             <main>
                 {{ $slot }}
