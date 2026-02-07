@@ -18,6 +18,7 @@ class UserWeatherSeeder extends Seeder
         if($city === null) 
         {
             $this->command->getOutput()->error("Niste uneli ime grada");
+            return;
         }
 
         $found = CityWeatherModel::where(['city' => $city])->first();
@@ -25,17 +26,19 @@ class UserWeatherSeeder extends Seeder
         if($found)
         {
             $this->command->getOutput()->error("Grad koji ste uneli već postoji! Unesite drugi.");
+            return;
         }
 
         $temp = $this->command->getOutput()->ask('Koju temperaturu želite da dodelite?');
         if($temp === null)
         {
             $this->command->getOutput()->error("Niste uneli temperaturu!");
+            return;
         }
 
         
 
-        dd('Grad: '. $city . "\n" . 'Temperatura: '. $temp);
+        //dd('Grad: '. $city . "\n" . 'Temperatura: '. $temp);
 
         //$faker = Factory::create('hr_HR');
         CityWeatherModel::create([
