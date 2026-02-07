@@ -45,7 +45,7 @@
                     </form>
                 </div>
                 <div class="w-full max-w-4xl mx-auto mt-6 bg-white rounded-xl shadow border border-indigo-200 overflow-x-auto mb-6"
-                    x-data="{open: false}"
+                    x-data="{open: false, editCity: {id: null, city: '', temp: ''}}"
                 >
                     <table class="w-full text-center border-collapse">
                         <thead class="bg-indigo-100">
@@ -68,7 +68,7 @@
                                     </td>
                                     <!-- EDIT -->
                                     <td class="p-3">
-                                         <button @click="open = true"
+                                         <button @click="editCity = { id: {{ $c->id }}, city: '{{ $c->city }}', temp: {{ $c->temp }} }; open = true"
                                             class="bg-indigo-600 hover:bg-indigo-800 text-white rounded-xl p-2">
                                             Uredi
                                         </button>
@@ -96,13 +96,13 @@
                         <div @click.away="open = false" class="bg-white rounded-xl p-6 shadow-xl w-full max-w-md">
                             <h3 class="text-center text-indigo-700 text-xl mb-4">Uredi grad</h3>
 
-                            <form action="{{ route('admin-update', $c) }}" method="POST">
+                            <form :action="`/admin/update-city/${editCity.id}`" method="POST">
                                 @csrf
                                 @method('PUT')
 
-                                <input type="text" name="city" value="{{ $c->city }}" 
+                                <input type="text" name="city" x-model="editCity.city" 
                                     class="w-full mb-3 p-2 border rounded-lg" placeholder="Grad">
-                                <input type="number" name="temp" value="{{ $c->temp }}" 
+                                <input type="number" name="temp" x-model="editCity.temp" 
                                     class="w-full mb-3 p-2 border rounded-lg" placeholder="Temperatura">
 
                                 <div class="flex justify-end space-x-2">
