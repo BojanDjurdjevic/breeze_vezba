@@ -27,6 +27,12 @@ class UserSeeder extends Seeder
         $this->command->getOutput()->progressStart($amount); // progress bar
         for($i = 0; $i < $amount; $i++)
         {
+            $found = User::where(['email' => $faker->email]);
+            if($found) 
+            {
+                $this->command->getOutput()->error("Ovaj korisnik već postoji");
+                return;
+            }
             User::create([
                 'name' => $faker->name,
                 'email' => $faker->email,
