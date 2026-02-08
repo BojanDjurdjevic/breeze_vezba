@@ -14,7 +14,7 @@
                 @foreach ($cities as $c)
                     <tr class="border-t hover:bg-gray-50 transition">
                         <td class="p-3 font-medium">
-                            {{ $c->city }}
+                            {{ $c->city->name }}
                         </td>
 
                         <td class="p-3">

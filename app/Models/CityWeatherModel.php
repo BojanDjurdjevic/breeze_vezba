@@ -14,7 +14,7 @@ class CityWeatherModel extends Model
 
     public function city()
     {
-        $this->belongsTo(City::class);
+        return $this->belongsTo(City::class);
     }
 
     

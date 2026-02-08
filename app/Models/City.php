@@ -11,9 +11,14 @@ class City extends Model
     protected $fillable = [
         'name'
     ];
-    /*
+    
     public function weather()
     {
-        $this->hasMany(CityWeatherModel::class);
-    } */
+        return $this->hasMany(CityWeatherModel::class);
+    } 
+
+    public function forecasts()
+    {
+        return $this->hasMany(Forecast::class);
+    }
 }
