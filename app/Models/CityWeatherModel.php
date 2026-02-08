@@ -11,4 +11,11 @@ class CityWeatherModel extends Model
     protected $fillable = [
         'city', 'temp'
     ];
+
+    public function city()
+    {
+        $this->belongsTo(City::class);
+    }
+
+    
 }

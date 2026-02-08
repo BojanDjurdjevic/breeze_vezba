@@ -2,7 +2,9 @@
 
 namespace Database\Seeders;
 
+use App\Models\City;
 use App\Models\CityWeatherModel;
+use Faker\Factory;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -13,26 +15,15 @@ class WeatherSeader extends Seeder
      */
     public function run(): void
     {
-        $prognoza = [
-            'Kikinda' => 11,
-            'Sombor' => 15,
-            'Bačka Palanka' => 12,
-            'Surdulica' => 10,
-            'Gornji Milanovac' => 15,
-        ];
+        $city = City::all();
+        $faker = Factory::create();
 
-        foreach ($prognoza as $city => $temp)
+        foreach ($city as $c)
         {
-            $cityWeather = CityWeatherModel::where(['city' => $city])->first();
-
-            if($cityWeather !== null) {
-                $this->command->getOutput()->error("Grad $cityWeather->city već postoji");
-                continue; // preskače ga
-            }
-
+            
             CityWeatherModel::create([
-                'city' => $city,
-                'temp' => $temp
+                'city_id' => $c->id,
+                'temp' => $faker->randomFloat(1, 0, 40)
             ]);
         }
     }
