@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\CityController;
+use App\Http\Controllers\ForecastController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Middleware\CheckAdmin;
 use App\Models\CityWeatherModel;
@@ -17,6 +18,8 @@ Route::middleware(['auth', CheckAdmin::class])->prefix('admin')->group(function 
     Route::put('/update-city/{city}', [CityController::class, 'update'])->name('admin-update');
     Route::delete('/remove-city/{city}', [CityController::class, 'delete'])->name('admin.remove');
 });
+
+Route::get('/forecast/{city}', [ForecastController::class, 'fiveDays']);
 
 
 
