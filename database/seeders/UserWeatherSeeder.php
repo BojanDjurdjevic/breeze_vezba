@@ -23,7 +23,7 @@ class UserWeatherSeeder extends Seeder
 
         $found = CityWeatherModel::where(['city' => $city])->first();
 
-        if($found)
+        if($found) // BOLJE: instanceof CityWeatherModel
         {
             $this->command->getOutput()->error("Grad koji ste uneli već postoji! Unesite drugi.");
             return;

@@ -15,20 +15,21 @@ class WeatherSeader extends Seeder
     {
         $prognoza = [
             'Kikinda' => 11,
-            'Vršac' => 15,
-            'Valjevo' => 12,
-            'Kragujevac' => 10,
-            'Kraljevo' => 15,
-            'Zrenjanin' => 9,
-            'Šabac' => 9,
-            'Loznica' => 11,
-            'Negotin' => 8,
-            'Bor' => 10,
-            'Novi Pazar' => 9
+            'Sombor' => 15,
+            'Bačka Palanka' => 12,
+            'Surdulica' => 10,
+            'Gornji Milanovac' => 15,
         ];
 
         foreach ($prognoza as $city => $temp)
         {
+            $cityWeather = CityWeatherModel::where(['city' => $city])->first();
+
+            if($cityWeather !== null) {
+                $this->command->getOutput()->error("Grad $cityWeather->city već postoji");
+                continue; // preskače ga
+            }
+
             CityWeatherModel::create([
                 'city' => $city,
                 'temp' => $temp

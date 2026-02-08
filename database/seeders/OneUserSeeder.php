@@ -29,7 +29,7 @@ class OneUserSeeder extends Seeder
             return;
         }
         $found = User::where(['email' => $email])->first();
-        if($found) 
+        if($found instanceof User) // ja stavio samo $found - radi, ali ovako je bolje 
         {
             $this->command->getOutput()->error("Ovaj korisnik već postoji");
             return;
