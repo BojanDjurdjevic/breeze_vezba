@@ -20,6 +20,9 @@
                             <x-nav-link :href="route('admin.cities')" :active="request()->routeIs('admin.cities')">
                                 {{ __('Cities') }}
                             </x-nav-link>
+                            <x-nav-link :href="route('all-forecasts')" :active="request()->routeIs('all-forecasts')">
+                                {{ __('Forecast') }}
+                            </x-nav-link>
                         @endif
                     @endauth
                 </div>
