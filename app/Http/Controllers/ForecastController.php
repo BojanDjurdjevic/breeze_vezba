@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Models\City;
 use App\Models\CityWeatherModel;
 use Illuminate\Http\Request;
 
@@ -17,7 +18,10 @@ class ForecastController extends Controller
 
     public function fiveDays($c)
     {
-
+        $mycity = City::where(['name' => $c])->first()->forecasts()->get();
+        //$forecasts = City::find($mycity->id)->forecasts()->get();
+        dd($mycity);
+        /*
         $cities = [
             'beograd' => [10, 10, 12, 15, 14],
             'novi Sad' => [10, 9, 9, 15, 17],
@@ -35,6 +39,6 @@ class ForecastController extends Controller
             return view('forecasts', compact('c', 'temps'));
         } else {
             return redirect()->back()->with('error', "Odabrani grad sa imenom $c ne postoji");
-        }
+        } */
     }
 }

@@ -9,7 +9,7 @@ class CityWeatherModel extends Model
     protected $table = 'city_weather';
 
     protected $fillable = [
-        'city', 'temp'
+        'city_id', 'temp'
     ];
 
     public function city()
