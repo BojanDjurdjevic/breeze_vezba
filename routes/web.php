@@ -17,6 +17,9 @@ Route::middleware(['auth', CheckAdmin::class])->prefix('admin')->group(function 
     Route::post('/cities', [CityController::class, 'create'])->name('add-city');
     Route::post('/update-city', [CityController::class, 'update'])->name('admin-update');
     Route::delete('/remove-city/{city}', [CityController::class, 'delete'])->name('admin.remove');
+
+    Route::get('/forecasts', [ForecastController::class, 'index'])->name('all-forecasts');
+    Route::post('/create-forecast', [ForecastController::class, 'create'])->name('create-forecast');
 });
 
 Route::get('/forecast/{city:name}', [ForecastController::class, 'fiveDays']);

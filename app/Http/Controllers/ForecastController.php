@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use App\Models\City;
 use App\Models\CityWeatherModel;
+use App\Models\Forecast;
 use Illuminate\Http\Request;
 
 use function Symfony\Component\String\s;
@@ -13,7 +14,10 @@ class ForecastController extends Controller
 {
     public function index() 
     {
-
+        $forecasts = Forecast::with('city')->get()->groupBy('city_id');
+        $cities = City::all();
+        //dd($forecasts);
+        return view('admin.add-forecast', compact('forecasts', 'cities'));
     }
 
     public function fiveDays(City $city)
@@ -21,5 +25,20 @@ class ForecastController extends Controller
         //$cityForecasts = $city->forecasts()->get();
 
         return view('forecasts', compact('city'));
+    }
+
+    public function create(Request $request)
+    {
+        $validated = $request->validate([
+            'city_id' => 'required|exists:cities,id',
+            'temperature' => 'required|integer',
+            'date' => 'required|string',
+            'weather_type' => 'required|string',
+            'probability' => 'nullable'
+        ]);
+
+        Forecast::create($validated);
+
+        return redirect()->route('all-forecasts')->with('success', 'Uspešno ste dodali prognozu.');
     }
 }
