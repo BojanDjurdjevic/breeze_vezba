@@ -20,17 +20,29 @@ class ForecastSeeder extends Seeder
         
         $faker = Factory::create();
 
+        $type = ['rainy', 'sunny', 'snowy'];
+
         foreach($cities as $c)
         {
             $startDate = new DateTime();
-            for($i = 0; $i < 5; $i++)
+            for($i = 1; $i < 6; $i++)
             { 
                 $temp = $faker->randomFloat(1, -10, 42);
                 $date = (clone $startDate)->modify("+$i day");
+                $num = random_int(0, 2);
+                $wt = $type[$num];
+                $probability = random_int(0, 100);
+                if($wt === 'sunny') 
+                {
+                    $probability = null;
+                }
+
                 Forecast::create([
                     'city_id' => $c->id,
                     'temperature' => $temp,
-                    'date' => $date->format('Y-m-d')
+                    'date' => $date->format('Y-m-d'),
+                    'weather_type' => $wt,
+                    'probability' => $probability
                 ]);
             }
         }
