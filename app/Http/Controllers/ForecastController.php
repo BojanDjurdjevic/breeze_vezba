@@ -16,29 +16,10 @@ class ForecastController extends Controller
 
     }
 
-    public function fiveDays($c)
+    public function fiveDays(City $city)
     {
-        $mycity = City::where(['name' => $c])->first()->forecasts()->get();
-        //$forecasts = City::find($mycity->id)->forecasts()->get();
-        dd($mycity);
-        /*
-        $cities = [
-            'beograd' => [10, 10, 12, 15, 14],
-            'novi Sad' => [10, 9, 9, 15, 17],
-            'niš' => [8, 8, 16, 12, 15],
-            'kragujevac' => [10, 6, 11, 11, 14],
-            'zrenjanin' => [9, 16, 16, 13, 14],
-            'valjevo' => [7, 10, 15, 12, 14],
-        ];
-        
-        $city = strtolower($c);
+        //$cityForecasts = $city->forecasts()->get();
 
-        if(array_key_exists($city, $cities)) { //isset($cities[$city])
-            $temps = $cities[$city];
-            $c = strtoupper($c);
-            return view('forecasts', compact('c', 'temps'));
-        } else {
-            return redirect()->back()->with('error', "Odabrani grad sa imenom $c ne postoji");
-        } */
+        return view('forecasts', compact('city'));
     }
 }

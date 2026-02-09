@@ -19,7 +19,7 @@ Route::middleware(['auth', CheckAdmin::class])->prefix('admin')->group(function 
     Route::delete('/remove-city/{city}', [CityController::class, 'delete'])->name('admin.remove');
 });
 
-Route::get('/forecast/{city}', [ForecastController::class, 'fiveDays']);
+Route::get('/forecast/{city:name}', [ForecastController::class, 'fiveDays']);
 
 
 

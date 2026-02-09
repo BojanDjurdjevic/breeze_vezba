@@ -13,12 +13,12 @@
             <tbody>
                 <tr class="border-t hover:bg-gray-50 transition">
                     <td class="p-3 font-medium">
-                        {{ $c }}
+                        {{ $city->name }}
                     </td>
 
                     <td class="p-3">
-                        @foreach ($temps as $t)
-                           {{ $t }} °C,  
+                        @foreach ($city->forecasts as $f)
+                           {{ $f->date }}: <b>{{ $f->temperature }} °C</b>,  
                         @endforeach
                     </td>
                 </tr>
