@@ -15,7 +15,7 @@ Route::get('/', function () {
 Route::middleware(['auth', CheckAdmin::class])->prefix('admin')->group(function () {
     Route::get('/cities', [CityController::class, 'index'])->name('admin.cities');
     Route::post('/cities', [CityController::class, 'create'])->name('add-city');
-    Route::put('/update-city/{city}', [CityController::class, 'update'])->name('admin-update');
+    Route::post('/update-city', [CityController::class, 'update'])->name('admin-update');
     Route::delete('/remove-city/{city}', [CityController::class, 'delete'])->name('admin.remove');
 });
 

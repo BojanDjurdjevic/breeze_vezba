@@ -14,7 +14,7 @@
                         @click="showForm = !showForm"
                         class="mb-4 px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition w-36"
                     >
-                        <span x-show="!showForm">➕ Dodaj grad</span>
+                        <span x-show="!showForm">➕ Dodaj °C</span>
                         <span x-show="showForm">✖ Zatvori</span>
                     </button>
 
@@ -22,7 +22,7 @@
                         @click.outside="showForm = false"
                         x-show="showForm"
                         x-transition 
-                        action="{{ route('add-city') }}" method="POST" 
+                        action="/admin/update-city" method="POST" 
                         class="w-full md:max-w-md sm:max-w-sm flex items-center flex-col align-center rounded-xl shadow-xl">
                         @if ($errors->any())
                             <p class="text-red-600"><b>Greška:{{ $errors->first() }}</b></p>
@@ -30,10 +30,14 @@
                         @csrf
                         @method('POST')
                         <h3 class="text-center text-indigo-700">Unesite grad i trenutnu temperaturu</h3>
-                        <input type="text" name="city" placeholder="Unesite Grad" class="p-2 rounded-xl m-3 
+                        <select 
+                            name="city_id" id="" class="p-2 rounded-xl m-3 
                             hover:bg-gray-300 focus:border-indigo-700 w-72 self-center"
-                            value="{{ old('city') }}"  
-                        />
+                            >
+                            @foreach ($cities as $city)
+                                <option value="{{ $city->id }}">{{ $city->name }}</option>
+                            @endforeach
+                        </select>
                         <input type="number" name="temp" placeholder="Unesite temperaturu" class="p-2 rounded-xl m-3 
                             hover:bg-gray-300 focus:border-indigo-700 w-72 self-center"
                             value="{{ old('temp') }}"  
@@ -57,18 +61,18 @@
                         </thead>
 
                         <tbody>
-                            @foreach ($cities as $c)
+                            @foreach ($cities as $city)
                                 <tr class="border-t hover:bg-gray-50 transition">
                                     <td class="p-3 font-medium">
-                                        {{ $c->city->name }}
+                                        {{ $city->name }}
                                     </td>
 
                                     <td class="p-3">
-                                        {{ $c->temp }} °C
+                                        {{ $city->weather()->first()->temp }} °C
                                     </td>
                                     <!-- EDIT -->
                                     <td class="p-3">
-                                         <button @click="editCity = { id: {{ $c->id }}, city: '{{ $c->city }}', temp: {{ $c->temp }} }; open = true"
+                                         <button @click="editCity = { id: {{ $city->id }}, city: '{{ $city->city }}', temp: {{ $city->temp }} }; open = true"
                                             class="bg-indigo-600 hover:bg-indigo-800 text-white rounded-xl p-2">
                                             Uredi
                                         </button>
@@ -76,7 +80,7 @@
 
                                     <td class="p-3">
                                         <!-- DELETE -->
-                                        <form action="{{ route('admin.remove', $c) }}" method="POST">
+                                        <form action="{{ route('admin.remove', $city) }}" method="POST">
                                             @csrf
                                             @method('DELETE')
                                             <button class="bg-red-600 hover:bg-red-800 text-white rounded-lg px-3 py-1"

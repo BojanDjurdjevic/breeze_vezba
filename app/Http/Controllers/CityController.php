@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Models\City;
 use App\Models\CityWeatherModel;
 use Illuminate\Http\Request;
 
@@ -10,8 +11,8 @@ class CityController extends Controller
 {
     public function index()
     {
-        $cities = CityWeatherModel::all();
-        return view('cities', compact('cities'));
+        $cities = City::all();
+        return view('admin.cities', compact('cities'));
     }
 
     public function create(Request $request)
@@ -26,19 +27,20 @@ class CityController extends Controller
         return redirect()->route('admin.cities')->with('success', 'Uspešno ste dodali novi grad!');
     }
 
-    public function update(Request $request, CityWeatherModel $city)
+    public function update(Request $request)
     {
-        $request->validate([
-            'city' => 'required|string|min:3',
+        
+        $validated = $request->validate([
+            'city_id' => 'required|exists:cities,id',
             'temp' => 'required|integer'
         ]);
 
-        $city->city = $request->get('city');
-        $city->temp = $request->get('temp');
+        $weather = CityWeatherModel::where(['city_id' => $request->get('city_id')])->first();
+        $city = $weather->city->name;
 
-        $city->save();
+        $weather->update($validated);
 
-        return redirect()->route('admin.cities')->with('success', 'Uspešno ste ažurirali grad!');
+        return redirect()->route('admin.cities')->with('success', "Uspešno ste ažurirali temperaturu za grad: $city");
     }
 
     public function delete(CityWeatherModel $city)
