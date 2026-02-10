@@ -14,10 +14,10 @@ class ForecastController extends Controller
 {
     public function index() 
     {
-        $forecasts = Forecast::with('city')->get()->groupBy('city_id');
+        //$forecasts = Forecast::with('city')->get()->groupBy('city_id');
         $cities = City::all();
         //dd($forecasts);
-        return view('admin.add-forecast', compact('forecasts', 'cities'));
+        return view('admin.add-forecast', compact( 'cities'));
     }
 
     public function fiveDays(City $city)

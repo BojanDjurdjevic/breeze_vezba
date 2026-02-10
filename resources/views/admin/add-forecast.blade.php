@@ -65,17 +65,16 @@
                 <div class="w-full max-w-4xl mx-auto mt-6 bg-white rounded-xl shadow border border-indigo-200 overflow-x-auto mb-6
                     flex flex-col items-center"
                 >
-                    @foreach ($forecasts as $id => $forecast)
+                    
+                    @foreach ($cities as $city)
                         <div class="p-6 mt-3 shadow-md rounded-lg ">
-                            <h3>{{ $forecast->first()->city->name }}</h3>
-                            @foreach ($forecast as $f)
+                            <h3>{{ $city->name }}</h3>
+                            @foreach ($city->forecasts as $f)
                                 <p>Datum: {{ $f->date }} <b><span>{{ $f->temperature }} °C</span></b> / {{ $f->weather_type }} / Padavine: {{ $f->probability }}%</p>
                             @endforeach
                         </div>
                     @endforeach
-                    
                 </div>
-
             </div>
         </div>
     </div>
