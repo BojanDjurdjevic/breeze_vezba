@@ -47,7 +47,7 @@ class ForecastController extends Controller
     {
         $cityName = $request->get('city');
 
-        $cities = City::where('name', "LIKE", "%$cityName%")->get();
+        $cities = City::with('todaysForecast')->where('name', "LIKE", "%$cityName%")->get();
 
         if(count($cities) === 0) {
             return redirect('/')->with('error', "Grad koji sadržis slova $cityName ne postoji!");

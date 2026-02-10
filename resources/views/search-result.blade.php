@@ -1,5 +1,5 @@
 <x-app-layout>
-    <div class="p-9 m-3 flex justify-center ">
+    <div class="p-9 m-3 grid gap-1 lg:grid-cols-8 md:grid-cols-6 sm:grid-cols-4">
         @foreach ($cities as $city)
             @php
                 //$boja = App\Http\ForecastHelper::getColorByTemp($city->forecasts->first()->temperature);
