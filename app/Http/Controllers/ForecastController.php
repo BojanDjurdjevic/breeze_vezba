@@ -42,4 +42,17 @@ class ForecastController extends Controller
 
         return redirect()->route('all-forecasts')->with('success', 'Uspešno ste dodali prognozu.');
     }
+
+    public function search(Request $request) 
+    {
+        $cityName = $request->get('city');
+
+        $cities = City::where('name', "LIKE", "%$cityName%")->get();
+
+        if(count($cities) === 0) {
+            return redirect('/')->with('error', "Grad koji sadržis slova $cityName ne postoji!");
+        }
+
+        return view("search-result", compact('cities'));
+    }
 }
