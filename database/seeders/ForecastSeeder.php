@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use App\Models\City;
 use App\Models\Forecast;
+use Carbon\Carbon;
 use DateTime;
 use Faker\Factory;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
@@ -33,7 +34,7 @@ class ForecastSeeder extends Seeder
         {
             $startDate = new DateTime();
             $saveTemp = null;
-            for($i = 1; $i < 6; $i++)
+            for($i = 1; $i < 31; $i++)
             {
                 $date = (clone $startDate)->modify("+$i day");
                 $num = random_int(0, 3);
@@ -63,7 +64,7 @@ class ForecastSeeder extends Seeder
                 Forecast::create([
                     'city_id' => $c->id,
                     'temperature' => $temp,
-                    'date' => $date->format('Y-m-d'),
+                    'date' => $date->format('Y-m-d'), //Carbon::now()->addDays($i)
                     'weather_type' => $wt,
                     'probability' => $probability
                 ]);
