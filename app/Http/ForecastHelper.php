@@ -15,4 +15,14 @@ class ForecastHelper
 
         return $boja;
     }
+
+    public static function getIcon($type)
+    {
+        $icon = '';
+        if($type == 'rainy') $icon = 'mdi-weather-rainy';
+        if($type == 'sunny') $icon = 'mdi-weather-sunny';
+        if($type == 'snowy') $icon = 'mdi-weather-snowy';
+
+        return $icon;
+    }
 }

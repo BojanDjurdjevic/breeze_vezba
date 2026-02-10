@@ -6,8 +6,6 @@
     </x-slot>
 
     <div class="py-12">
-        <i class="mdi mdi-weather-sunny text-yellow-500 text-2xl"></i>
-        
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div x-data="{ showForm: false }" 
@@ -76,11 +74,12 @@
 
                                 @php
                                     $boja = App\Http\ForecastHelper::getColorByTemp($f->temperature);
+                                    $icon = App\Http\ForecastHelper::getIcon($f->weather_type);
                                 @endphp
 
                                 <li>Datum: {{ $f->date }} <b><span class="{{ $boja }}">{{ $f->temperature }} °C</span></b>
                                      / {{ $f->weather_type }} / Padavine: {{ $f->probability }}%
-                                     
+                                     <i class="mdi {{ $icon }}"></i>
                                 </li>
                             @endforeach
                             </ul>
