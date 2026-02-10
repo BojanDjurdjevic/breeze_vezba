@@ -6,6 +6,8 @@
     </x-slot>
 
     <div class="py-12">
+        <i class="mdi mdi-weather-sunny text-yellow-500 text-2xl"></i>
+        
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div x-data="{ showForm: false }" 
@@ -63,7 +65,7 @@
                     </form>
                 </div>
                 <div class="w-full max-w-4xl mx-auto mt-6 bg-white rounded-xl shadow border border-indigo-200 overflow-x-auto mb-6
-                    flex flex-col items-center"
+                    grid gap-1 md:grid-cols-2"
                 >
                     
                     @foreach ($cities as $city)
@@ -76,7 +78,10 @@
                                     $boja = App\Http\ForecastHelper::getColorByTemp($f->temperature);
                                 @endphp
 
-                                <li>Datum: {{ $f->date }} <b><span class="{{ $boja }}">{{ $f->temperature }} °C</span></b> / {{ $f->weather_type }} / Padavine: {{ $f->probability }}%</li>
+                                <li>Datum: {{ $f->date }} <b><span class="{{ $boja }}">{{ $f->temperature }} °C</span></b>
+                                     / {{ $f->weather_type }} / Padavine: {{ $f->probability }}%
+                                     
+                                </li>
                             @endforeach
                             </ul>
                         </div>
