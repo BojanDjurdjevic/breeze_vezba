@@ -38,6 +38,7 @@ class ForecastController extends Controller
         ]);
 
         Forecast::create($validated);
+        //Forecast::create($request->all()); // može i ovako
 
         return redirect()->route('all-forecasts')->with('success', 'Uspešno ste dodali prognozu.');
     }

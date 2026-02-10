@@ -69,9 +69,16 @@
                     @foreach ($cities as $city)
                         <div class="p-6 mt-3 shadow-md rounded-lg ">
                             <h3>{{ $city->name }}</h3>
+                            <ul>
                             @foreach ($city->forecasts as $f)
-                                <p>Datum: {{ $f->date }} <b><span>{{ $f->temperature }} °C</span></b> / {{ $f->weather_type }} / Padavine: {{ $f->probability }}%</p>
+
+                                @php
+                                    $boja = App\Http\ForecastHelper::getColorByTemp($f->temperature);
+                                @endphp
+
+                                <li>Datum: {{ $f->date }} <b><span class="{{ $boja }}">{{ $f->temperature }} °C</span></b> / {{ $f->weather_type }} / Padavine: {{ $f->probability }}%</li>
                             @endforeach
+                            </ul>
                         </div>
                     @endforeach
                 </div>
