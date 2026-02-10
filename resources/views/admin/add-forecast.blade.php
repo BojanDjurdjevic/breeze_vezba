@@ -49,6 +49,7 @@
                             <option value="sunny">Sunny</option>
                             <option value="rainy">Rainy</option>
                             <option value="snowy">Snowy</option>
+                            <option value="cloudy">Cloudy</option>
                         </select>
                         <input type="number" name="probability" placeholder="Unesite šansu za padavine" class="p-2 rounded-xl m-3 
                             hover:bg-gray-300 focus:border-indigo-700 w-72 self-center"

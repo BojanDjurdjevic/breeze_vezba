@@ -20,10 +20,14 @@ class ForecastSeeder extends Seeder
         
         $faker = Factory::create();
 
-        //novo
-        $tempAllow = ['min' => -10, 'max' => 40];
-
         $type = ['rainy', 'sunny', 'snowy', 'cloudy'];
+
+        $tempAllow = [
+            'rainy' => ['min' => -3, 'max' => 40],
+            'sunny' => ['min' => -10, 'max' => 40],
+            'snowy' => ['min' => -2, 'max' => 2],
+            'cloudy' => ['min' => -10, 'max' => 15],
+        ];
 
         foreach($cities as $c)
         {
@@ -37,31 +41,23 @@ class ForecastSeeder extends Seeder
                 $probability = random_int(0, 100);
                 if($wt === 'sunny') 
                 {
-                    $probability = null;
-                    $saveTemp != null ? 
-                    $temp = $faker->randomFloat(1, $saveTemp - 5, $saveTemp + 5) : $temp = $faker->randomFloat(1, -10, 40);
-                    
-                }
-                elseif($wt === 'cloudy') 
-                {
-                    $saveTemp != null ? 
-                    $temp = $faker->randomFloat(1, $saveTemp - 5, $saveTemp + 5) :
-                    $temp = $faker->randomFloat(1, -10, 15);
-                }
-                elseif($wt === 'rainy') 
-                {
-                    $saveTemp != null ? 
-                    $temp = $faker->randomFloat(1, $saveTemp - 5, $saveTemp + 5) :
-                    $temp = $faker->randomFloat(1, -3, 40);
-                }
-                elseif($wt === 'snowy') 
-                {
-                    $saveTemp != null ? 
-                    $temp = $faker->randomFloat(1, $saveTemp - 5, $saveTemp + 5) :
-                    $temp = $faker->randomFloat(1, -2, 1);
+                    $probability = null;      
                 }
 
-                //novo
+                $min = $tempAllow[$wt]['min'];
+                $max = $tempAllow[$wt]['max'];
+
+                if ($saveTemp !== null) {
+                    $min = max($min, $saveTemp - 5);
+                    $max = min($max, $saveTemp + 5);
+                }
+
+                if($min > $max) {
+                    [$min, $max] = [$max, $min];
+                }
+
+                $temp = $faker->randomFloat(1, $min, $max);
+
                 $saveTemp = $temp;
 
                 Forecast::create([
