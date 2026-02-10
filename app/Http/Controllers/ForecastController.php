@@ -55,4 +55,10 @@ class ForecastController extends Controller
 
         return view("search-result", compact('cities'));
     }
+
+    public function results(City $city)
+    {
+        
+        return view('one-forecasts', compact('city'));
+    }
 }
