@@ -22,6 +22,7 @@ class ForecastHelper
         if($type == 'rainy') $icon = 'mdi-weather-rainy';
         if($type == 'sunny') $icon = 'mdi-weather-sunny';
         if($type == 'snowy') $icon = 'mdi-weather-snowy';
+        if($type == 'cloudy') $icon = 'mdi-weather-cloudy';
 
         return $icon;
     }
