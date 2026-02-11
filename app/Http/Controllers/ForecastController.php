@@ -6,7 +6,9 @@ use App\Http\Controllers\Controller;
 use App\Models\City;
 use App\Models\CityWeatherModel;
 use App\Models\Forecast;
+use App\Models\UserCities;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth as FacadesAuth;
 
 use function Symfony\Component\String\s;
 
@@ -50,10 +52,14 @@ class ForecastController extends Controller
         $cities = City::with('todaysForecast')->where('name', "LIKE", "%$cityName%")->get();
 
         if(count($cities) === 0) {
-            return redirect('/')->with('error', "Grad koji sadržis slova $cityName ne postoji!");
+            return redirect('/')->with('error', "Grad koji sadrži slova $cityName ne postoji!");
         }
 
-        return view("search-result", compact('cities'));
+        $userFavourites = FacadesAuth::user()->cityFavourites;
+        $userFavourites = $userFavourites->pluck('city_id')->toArray(); // pluck() vraća samo određeni podatak (city_id)
+        //dd($userFavourites);
+
+        return view("search-result", compact('cities', 'userFavourites'));
     }
 
     public function results(City $city)

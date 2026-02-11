@@ -9,7 +9,16 @@
             class="p-3 m-1 bg-indigo-500 text-white rounded-lg hover:bg-indigo-700
                     flex items-center justify-between"
             >
-                <a href=""><i class="mdi mdi-heart text-white"></i></a>
+                @if (in_array($city->id, $userFavourites))
+                    <a href="{{ route('favourites', $city) }}">
+                        <i class="mdi mdi-heart text-red-600"></i>
+                    </a>
+                @else
+                <a href="{{ route('favourites', $city) }}">
+                    <i class="mdi mdi-heart text-indigo-100"></i>
+                </a>
+                @endif
+                
                 
                 <a href="{{ route('all-city-forecasts', ['city' => $city->name])  }}">
                     <i class="mdi {{ $icon }}"></i>

@@ -3,6 +3,7 @@
 use App\Http\Controllers\CityController;
 use App\Http\Controllers\ForecastController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\UserCitiesController;
 use App\Http\Middleware\CheckAdmin;
 use App\Models\City;
 use App\Models\CityWeatherModel;
@@ -26,6 +27,8 @@ Route::middleware(['auth', CheckAdmin::class])->prefix('admin')->group(function 
 Route::get('/myforecasts', [ForecastController::class, 'search'])->name('city-forecast');
 Route::get('/cityforecasts/{city:name}', [ForecastController::class, 'results'])->name('all-city-forecasts');
 Route::get('/forecast/{city:name}', [ForecastController::class, 'fiveDays']);
+
+Route::get('/user-cities/favourite/{city}', [UserCitiesController::class, 'favourite'])->name('favourites');
 
 
 
