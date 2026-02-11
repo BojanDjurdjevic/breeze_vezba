@@ -12,7 +12,6 @@
                     <h3 class="text-center text-indigo-700">Pronađite grad</h3>
                         <input type="text" name="city" placeholder="Unesite grad" class="p-2 rounded-xl m-3 
                             hover:bg-gray-300 focus:border-indigo-700 w-72 self-center"
-                            value="{{ old('temp') }}"  
                         />
                     <button type="submit" 
                         class="p-2 m-3 text-white bg-indigo-700 rounded-xl w-36 self-center"
@@ -22,30 +21,26 @@
         </div>
     </div>
     
-    <div class="w-full max-w-4xl mx-auto mt-6 bg-white rounded-xl shadow border border-indigo-200 overflow-x-auto mb-6"
-        x-data="{open: false}"
+    <div class="w-full max-w-4xl mx-auto mt-6 overflow-x-auto mb-6
+                grid lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2"
     >
-        <table class="w-full text-center border-collapse">
-            <thead class="bg-indigo-100">
-                <tr>
-                    <th class="p-3 font-semibold text-indigo-700">Grad</th>
-                    <th class="p-3 font-semibold text-indigo-700">Temperatura</th>
-                </tr>
-            </thead>
+        @foreach ($cities as $city)
+             @php
+                $icon = App\Http\ForecastHelper::getIcon($city->todaysForecast->weather_type);
+            @endphp
+            @if (in_array($city->id, $userFavourites))
+            <div
+                class="p-3 m-1 bg-indigo-500 text-white rounded-lg hover:bg-indigo-700
+                flex items-center justify-between transition"
+            >
+                <a href="{{ route('all-city-forecasts', ['city' => $city->name]) }}"
+                    class="flex items-center gap-2 flex-1 justify-center">
+                    <i class="mdi {{ $icon }}"></i>
+                    {{ $city->name }}
+                </a>
+            </div>
+            @endif
+        @endforeach
 
-            <tbody>
-                @foreach ($cities as $c)
-                    <tr class="border-t hover:bg-gray-50 transition">
-                        <td class="p-3 font-medium">
-                            {{ $c->name }}
-                        </td>
-
-                        <td class="p-3">
-                            {{ $c->weather->temp }} °C
-                        </td>
-                    </tr>
-                @endforeach
-                </tbody>
-        </table>
     </div>
 </x-app-layout>

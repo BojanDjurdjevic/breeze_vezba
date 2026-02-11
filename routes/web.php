@@ -7,11 +7,18 @@ use App\Http\Controllers\UserCitiesController;
 use App\Http\Middleware\CheckAdmin;
 use App\Models\City;
 use App\Models\CityWeatherModel;
+use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
+    $userFavourites = [];
+    if(Auth::check()) {
+        $userFavourites = Auth::user()->cityFavourites;
+        $userFavourites = $userFavourites->pluck('city_id')->toArray();
+    } 
     $cities = City::all();
-    return view('welcome', compact('cities'));
+    return view('welcome', compact('cities', 'userFavourites'));
 });
 
 Route::middleware(['auth', CheckAdmin::class])->prefix('admin')->group(function () {

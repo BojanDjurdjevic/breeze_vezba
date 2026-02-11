@@ -24,7 +24,6 @@
                     </a>
                 @endif
 
-                {{-- Grad --}}
                 <a href="{{ route('all-city-forecasts', ['city' => $city->name]) }}"
                    class="flex items-center gap-2 flex-1 justify-center">
                     <i class="mdi {{ $icon }}"></i>
