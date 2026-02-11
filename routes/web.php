@@ -29,6 +29,7 @@ Route::get('/cityforecasts/{city:name}', [ForecastController::class, 'results'])
 Route::get('/forecast/{city:name}', [ForecastController::class, 'fiveDays']);
 
 Route::get('/user-cities/favourite/{city}', [UserCitiesController::class, 'favourite'])->name('favourites');
+Route::delete('/user-cities/remove-favourite/{city}', [UserCitiesController::class, 'rmFavourite'])->name('rmfavourite');
 
 
 

@@ -12,13 +12,5 @@ class UserCities extends Model
         'city_id', 'user_id'
     ];
 
-    public function users() 
-    {
-        return $this->hasbelongsToMany(User::class);
-    }
-
-    public function city() 
-    {
-        return $this->belongsTo(City::class);
-    }
+    
 }

@@ -7,6 +7,7 @@ use App\Models\City;
 use App\Models\CityWeatherModel;
 use App\Models\Forecast;
 use App\Models\UserCities;
+use Illuminate\Container\Attributes\Auth;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth as FacadesAuth;
 
@@ -55,9 +56,12 @@ class ForecastController extends Controller
             return redirect('/')->with('error', "Grad koji sadrži slova $cityName ne postoji!");
         }
 
-        $userFavourites = FacadesAuth::user()->cityFavourites;
-        $userFavourites = $userFavourites->pluck('city_id')->toArray(); // pluck() vraća samo određeni podatak (city_id)
-        //dd($userFavourites);
+        $userFavourites = [];
+        if(FacadesAuth::check()) {
+            $userFavourites = FacadesAuth::user()->cityFavourites;
+            $userFavourites = $userFavourites->pluck('city_id')->toArray(); // pluck() vraća samo određeni podatak (city_id)
+        }
+        
 
         return view("search-result", compact('cities', 'userFavourites'));
     }

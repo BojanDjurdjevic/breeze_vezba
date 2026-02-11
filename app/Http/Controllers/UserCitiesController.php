@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\Auth;
 
 class UserCitiesController extends Controller
 {
-    public function favourite(Request $request, $city)
+    public function favourite($city)
     {
         if(!Auth::user()) { // if (Auth::user() === null)
             return redirect('/login')->with('error', 'Morate biti ulogovani da biste izabrali omiljeni grad!');
@@ -25,5 +25,16 @@ class UserCitiesController extends Controller
         //dd($userCity);
         UserCities::create($userCity);
         return redirect()->back()->with('success', 'Uspešno ste dodali grad na listu omiljenih');
+    }
+
+    public function rmFavourite(City $city)
+    {
+        if(!Auth::user()) { // if (Auth::user() === null)
+            return redirect('/login')->with('error', 'Morate biti ulogovani da biste skinuli grad sa liste omiljenih!');
+        }
+
+        UserCities::where(['city_id' => $city->id, 'user_id' => Auth::id()])->first()->delete();
+
+        return redirect()->back()->with('success', "Uspešno ste obrisali grad $city->name sa liste omiljenih");
     }
 }
