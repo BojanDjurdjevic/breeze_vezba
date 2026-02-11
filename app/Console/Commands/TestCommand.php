@@ -5,21 +5,21 @@ namespace App\Console\Commands;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Http;
 
-class GetRealWeather extends Command
+class TestCommand extends Command
 {
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'weather:get-real';
+    protected $signature = 'app:test-command';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'To sync real life weather using Open API';
+    protected $description = 'Command description';
 
     /**
      * Execute the console command.
@@ -27,13 +27,9 @@ class GetRealWeather extends Command
     public function handle()
     {
         /*
-        $url= "https://reqres.in/api/users?page=2";
-        $response = Http::get($url);
-        $jsonResponse = $response->body();
-
-        $jsonResponse = json_decode($jsonResponse, true);
-
-        dd($jsonResponse); */
+        $response = Http::get("https://reqres.in/api/users/2");
+        dd($response->json());
+        */
 
         $response = Http::get("http://api.weatherapi.com/v1/current.json", [
             "key" => '064b479180f148699a5223554261102',
