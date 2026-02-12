@@ -12,7 +12,7 @@ class GetRealWeather extends Command
      *
      * @var string
      */
-    protected $signature = 'weather:get-real';
+    protected $signature = 'weather:get-real {city}';
 
     /**
      * The console command description.
@@ -37,8 +37,16 @@ class GetRealWeather extends Command
 
         $response = Http::get("http://api.weatherapi.com/v1/current.json", [
             "key" => $_ENV['API_KEY'],
-            "q" => 'Novi Sad'
+            "q" => $this->argument('city'), 
+            'lang' => 'sr'
         ]);
-        dd($response->json());
+        $jsonResponse = $response->json();
+
+        if(isset($jsonResponse['error'])) {
+            $this->output->error($jsonResponse['error']['message']); //"Ovaj grad ne postoji"
+        }
+        dd($jsonResponse);
+
+        return $jsonResponse;
     }
 }

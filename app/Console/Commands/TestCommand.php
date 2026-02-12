@@ -12,7 +12,7 @@ class TestCommand extends Command
      *
      * @var string
      */
-    protected $signature = 'app:test-command';
+    protected $signature = 'app:test-command {city}';
 
     /**
      * The console command description.
@@ -31,10 +31,21 @@ class TestCommand extends Command
         dd($response->json());
         */
 
-        $response = Http::get("http://api.weatherapi.com/v1/current.json", [
+        $response = Http::get("http://api.weatherapi.com/v1/forecast.json", [
             "key" => $_ENV['API_KEY'],
-            "q" => 'Novi Sad'
+            "q" => $this->argument("city"),
+            "aqi" => "no",
+            'days' => 5,
+            'lang' => 'sr',
+            'forecastday' => 5
         ]);
-        dd($response->json());
+
+        $jsonResponse = $response->json();
+
+        if(isset($jsonResponse['error'])) {
+            $this->output->error($jsonResponse['error']['message']); //"Ovaj grad ne postoji"
+        }
+
+        dd($jsonResponse);
     }
 }
