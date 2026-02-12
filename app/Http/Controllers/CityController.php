@@ -27,6 +27,11 @@ class CityController extends Controller
         return redirect()->route('admin.cities')->with('success', 'Uspešno ste dodali novi grad!');
     }
 
+    public function apiCall() 
+    {
+        
+    }
+
     public function update(Request $request)
     {
         

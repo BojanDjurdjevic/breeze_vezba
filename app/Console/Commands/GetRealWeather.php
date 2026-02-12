@@ -35,10 +35,11 @@ class GetRealWeather extends Command
 
         dd($jsonResponse); */
 
-        $response = Http::get("http://api.weatherapi.com/v1/current.json", [
+        $response = Http::get("http://api.weatherapi.com/v1/forecast.json", [
             "key" => $_ENV['API_KEY'],
             "q" => $this->argument('city'), 
-            'lang' => 'sr'
+            'lang' => 'sr',
+            'days' => 5
         ]);
         $jsonResponse = $response->json();
 

@@ -27,6 +27,6 @@ class City extends Model
     public function todaysForecast()
     {
         return $this->hasOne(Forecast::class)
-            ->whereDate('date', Carbon::now()->addDays(1));
+            ->whereDate('date', Carbon::now());
     }
 }

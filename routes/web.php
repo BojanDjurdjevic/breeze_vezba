@@ -31,7 +31,7 @@ Route::middleware(['auth', CheckAdmin::class])->prefix('admin')->group(function 
     Route::post('/create-forecast', [ForecastController::class, 'create'])->name('create-forecast');
 });
 
-Route::get('/myforecasts', [ForecastController::class, 'search'])->name('city-forecast');
+Route::get('/myforecasts', [ForecastController::class, 'apiCall'])->name('city-forecast');
 Route::get('/cityforecasts/{city:name}', [ForecastController::class, 'results'])->name('all-city-forecasts');
 Route::get('/forecast/{city:name}', [ForecastController::class, 'fiveDays']);
 

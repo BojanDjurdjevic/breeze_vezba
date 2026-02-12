@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Console\Commands\GetRealWeather;
 use App\Http\Controllers\Controller;
 use App\Models\City;
 use App\Models\CityWeatherModel;
@@ -9,6 +10,7 @@ use App\Models\Forecast;
 use App\Models\UserCities;
 use Illuminate\Container\Attributes\Auth;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Auth as FacadesAuth;
 
 use function Symfony\Component\String\s;
@@ -70,5 +72,15 @@ class ForecastController extends Controller
     {
         
         return view('one-forecasts', compact('city'));
+    }
+
+    public function apiCall(Request $request)
+    {
+        $city = City::where(['name' => $request->get('name')])->first();
+        dd($city);
+        $apiCommand = Artisan::call('weather:get-real', [
+            'city' => $request->get('city')
+        ]);
+        dd($apiCommand);
     }
 }
