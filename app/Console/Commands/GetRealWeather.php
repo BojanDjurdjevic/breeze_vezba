@@ -36,7 +36,7 @@ class GetRealWeather extends Command
         dd($jsonResponse); */
 
         $response = Http::get("http://api.weatherapi.com/v1/current.json", [
-            "key" => '064b479180f148699a5223554261102',
+            "key" => $_ENV['API_KEY'],
             "q" => 'Novi Sad'
         ]);
         dd($response->json());
