@@ -88,7 +88,7 @@ class ForecastController extends Controller
 
         $myCity = City::where(['name' => $request->get('city')])->first();
 
-        return view('search-forecasts', compact('myCity'));
+        return view('search-forecasts', compact('myCity', 'output'));
 
         /*
         dd($apiCommand);

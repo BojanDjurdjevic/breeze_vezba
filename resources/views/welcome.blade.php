@@ -25,8 +25,8 @@
                 grid lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2"
     >
         @foreach ($cities as $city)
-             @php
-                $icon = App\Http\ForecastHelper::getIcon($city->todaysForecast->weather_type);
+            @php
+                $icon = isset($city->todaysForecasts) ? App\Http\ForecastHelper::getIcon($city->todaysForecast->weather_type) : 'mdi-weather-sunny';
             @endphp
             @if (in_array($city->id, $userFavourites))
             <div

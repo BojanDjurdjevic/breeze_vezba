@@ -1,5 +1,6 @@
 <x-app-layout>
-    <h3 class="text-center">{{ $myCity->name }}</h3>
+    <h2 class="text-center">{{ $myCity->name }}</h2>
+    <h3 class="text-center">{{ $output }}</h3>
     <div class="w-full max-w-4xl mx-auto mt-6 p-3 
                 grid md:grid-cols-5 sm:grid-cols-3 gap-2">
         @foreach ($myCity->forecasts as $day)

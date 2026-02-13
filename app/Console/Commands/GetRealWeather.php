@@ -50,6 +50,7 @@ class GetRealWeather extends Command
             'days' => 5
         ]);
         $jsonResponse = $response->json();
+        //dd($jsonResponse);
 
         if(isset($jsonResponse['error'])) {
             $this->output->error($jsonResponse['error']['message']); //"Ovaj grad ne postoji"
@@ -73,6 +74,10 @@ class GetRealWeather extends Command
                 ]);
             }
         }
+
+        $sunrise = $jsonResponse['forecast']['forecastday'][0]['astro']['sunrise'];
+        $sunset = $jsonResponse['forecast']['forecastday'][0]['astro']['sunset'];
+        $this->output->comment("Izlazak Sunca: $sunrise / Zalazak: $sunset");
         return 0;
     }
 }
