@@ -4,6 +4,7 @@ namespace App\Console\Commands;
 
 use App\Models\City;
 use App\Models\Forecast;
+use App\Services\WeatherService;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Http;
 
@@ -43,13 +44,9 @@ class GetRealWeather extends Command
             return 0;
         }
 
-        $response = Http::get("http://api.weatherapi.com/v1/forecast.json", [
-            "key" => $_ENV['API_KEY'],
-            "q" => $this->argument('city'), 
-            'lang' => 'sr',
-            'days' => 5
-        ]);
-        $jsonResponse = $response->json();
+        $weatherService = new WeatherService();
+
+        $jsonResponse = $weatherService->getForecast($city);
         //dd($jsonResponse);
 
         if(isset($jsonResponse['error'])) {

@@ -22,7 +22,6 @@ Route::get('/', function () {
 });
 
 Route::middleware(['auth', CheckAdmin::class])->prefix('admin')->group(function () {
-    Route::get('/cities', [CityController::class, 'index'])->name('admin.cities');
     Route::post('/cities', [CityController::class, 'create'])->name('add-city');
     Route::post('/update-city', [CityController::class, 'update'])->name('admin-update');
     Route::delete('/remove-city/{city}', [CityController::class, 'delete'])->name('admin.remove');
@@ -32,8 +31,11 @@ Route::middleware(['auth', CheckAdmin::class])->prefix('admin')->group(function 
 });
 
 Route::get('/myforecasts', [ForecastController::class, 'apiCall'])->name('city-forecast');
-Route::get('/cityforecasts/{city:name}', [ForecastController::class, 'results'])->name('all-city-forecasts');
+Route::get('/cityforecasts/{city}', [ForecastController::class, 'getSunrise'])->name('all-city-forecasts');
 Route::get('/forecast/{city:name}', [ForecastController::class, 'fiveDays']);
+
+Route::get('/cities', [CityController::class, 'index'])->name('allcities');
+Route::get('/city-astro/{city}', [ForecastController::class, 'getSunrise'])->name('astro');
 
 Route::get('/user-cities/favourite/{city}', [UserCitiesController::class, 'favourite'])->name('favourites');
 Route::delete('/user-cities/remove-favourite/{city}', [UserCitiesController::class, 'rmFavourite'])->name('rmfavourite');

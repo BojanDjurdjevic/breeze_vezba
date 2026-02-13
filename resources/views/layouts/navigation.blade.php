@@ -15,11 +15,11 @@
                     <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                         {{ __('Dashboard') }}
                     </x-nav-link>
+                    <x-nav-link :href="route('allcities')" :active="request()->routeIs('allcities')">
+                        {{ __('Cities') }}
+                    </x-nav-link>
                     @auth
                         @if (Auth::user()->role === 'admin')
-                            <x-nav-link :href="route('admin.cities')" :active="request()->routeIs('admin.cities')">
-                                {{ __('Cities') }}
-                            </x-nav-link>
                             <x-nav-link :href="route('all-forecasts')" :active="request()->routeIs('all-forecasts')">
                                 {{ __('Forecast') }}
                             </x-nav-link>

@@ -6,13 +6,20 @@ use App\Http\Controllers\Controller;
 use App\Models\City;
 use App\Models\CityWeatherModel;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class CityController extends Controller
 {
     public function index()
     {
         $cities = City::all();
-        return view('admin.cities', compact('cities'));
+
+        $userFavourites = [];
+        if(Auth::check()) {
+            $userFavourites = Auth::user()->cityFavourites;
+            $userFavourites = $userFavourites->pluck('city_id')->toArray(); // pluck() vraća samo određeni podatak (city_id)
+        }
+        return view('admin.cities', compact('cities', 'userFavourites'));
     }
 
     public function create(Request $request)

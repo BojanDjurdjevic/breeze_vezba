@@ -8,6 +8,7 @@ use App\Models\City;
 use App\Models\CityWeatherModel;
 use App\Models\Forecast;
 use App\Models\UserCities;
+use App\Services\WeatherService;
 use Illuminate\Container\Attributes\Auth;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Artisan;
@@ -21,8 +22,21 @@ class ForecastController extends Controller
     {
         //$forecasts = Forecast::with('city')->get()->groupBy('city_id');
         $cities = City::all();
-        //dd($forecasts);
+
         return view('admin.add-forecast', compact( 'cities'));
+    }
+
+    public function getSunrise($city) 
+    {
+        $city = City::find($city);
+
+        $weatherSer = new WeatherService();
+        $weather = $weatherSer->getAstro($city->name);
+        //dd($weather);
+        $sunrise = $weather['astronomy']['astro']['sunrise'];
+        $sunset = $weather['astronomy']['astro']['sunset'];
+
+        return view('astro', compact('city', 'sunrise', 'sunset'));
     }
 
     public function fiveDays(City $city)
