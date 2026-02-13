@@ -76,11 +76,48 @@ class ForecastController extends Controller
 
     public function apiCall(Request $request)
     {
-        $city = City::where(['name' => $request->get('name')])->first();
-        dd($city);
         $apiCommand = Artisan::call('weather:get-real', [
             'city' => $request->get('city')
-        ]);
+        ]);  
+
+        $output = Artisan::output();
+
+        if($apiCommand !== 0) {
+            return redirect()->back()->with('error', $output);
+        }
+
+        $myCity = City::where(['name' => $request->get('city')])->first();
+
+        return view('search-forecasts', compact('myCity'));
+
+        /*
         dd($apiCommand);
+
+        if($apiCommand['error']) {
+            dd($apiCommand['error']);
+        }
+
+        if($city === null) {
+            die('Ne postoji grad u bazi');
+            $validated = $request->validate([
+                'name' => 'required|string'
+            ]);
+            $newCity =  City::create($validated);
+
+            foreach($apiCommand['forecast']['forecastday'] as $day) {
+                Forecast::create([
+                    'city_id' => $newCity->id,
+                    'temperature' => $day['day']['maxtemp_c'],
+                    'date' => $day['date'],
+                    'weather_type' => $day['day']['condition']['text'],
+                    'probability' => $day['day']['daily_chance_of_rain']
+                ]);
+            }
+            
+        }
+
+        if($city->todaysForecast()) {
+            die('Ima prognoza za danas!');
+        } */
     }
 }
