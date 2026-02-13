@@ -1,24 +1,18 @@
 <x-app-layout>
-    <div class="w-full max-w-4xl mx-auto mt-6 bg-white rounded-xl shadow border border-indigo-200 overflow-x-auto mb-6
-        grid gap-1 md:grid-cols-2"
-    >
-    
-            <div class="p-6 mt-3 shadow-md rounded-lg ">
-                <h3>{{ $city->name }}</h3>
-                <ul>
-                @foreach ($city->forecasts as $f)
-
-                    @php
-                        $boja = App\Http\ForecastHelper::getColorByTemp($f->temperature);
-                        $icon = App\Http\ForecastHelper::getIcon($f->weather_type);
-                    @endphp
-
-                    <li>Datum: {{ $f->date }} <b><span class="{{ $boja }}">{{ $f->temperature }} °C</span></b>
-                         / {{ $f->weather_type }} / Padavine: {{ $f->probability }}%
-                         <i class="mdi {{ $icon }}"></i>
-                    </li>
-                @endforeach
-                </ul>
+    <h3 class="text-center">{{ $city->name }}</h3>
+    <div class="w-full max-w-4xl mx-auto mt-6 p-3 
+                grid md:grid-cols-5 sm:grid-cols-3 gap-2">
+        @foreach ($city->forecasts as $day)
+            @php
+                $color = App\Http\ForecastHelper::getColorByTemp($day->temperature);
+                $icon = App\Http\ForecastHelper::getIcon($day->weather_type);
+            @endphp
+            <div class="shadow-md rounded-lg p-4 bg-white text-center">
+                <p><b>{{ $day->date }}</b></p>
+                <p class="mdi {{ $color }}">{{ $day->temperature }} C</p>
+                <p><i class="mdi {{ $icon }}"></i> {{ $day->weather_type }}</p>
+                <p>Padavine: {{ $day->probability }}</p>
             </div>
-    </div>
+        @endforeach
+    </div
 </x-app-layout>

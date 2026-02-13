@@ -20,9 +20,10 @@ class ForecastHelper
     {
         $icon = '';
         if($type == 'rainy') $icon = 'mdi-weather-rainy';
-        if($type == 'sunny') $icon = 'mdi-weather-sunny';
-        if($type == 'snowy') $icon = 'mdi-weather-snowy';
-        if($type == 'cloudy') $icon = 'mdi-weather-cloudy';
+        elseif($type == 'sunny') $icon = 'mdi-weather-sunny';
+        elseif($type == 'snowy') $icon = 'mdi-weather-snowy';
+        elseif($type == 'cloudy') $icon = 'mdi-weather-cloudy';
+        else $icon = 'mdi-weather-sunny';
 
         return $icon;
     }
